@@ -7,7 +7,7 @@ export default function Header({ PRODUCT, IMG, scrollToId, onKey }) {
       <div className="page py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <SafeImg src={IMG.logo} alt="Alumy brand logo" className="h-8 w-auto" />
-          <h1 className="display alt-head text-2xl md:text-4xl h-tight balance">{PRODUCT.title}</h1>
+          <h1 className="display alt-head text-2xl md:text-4xl h-tight balance break-keep">{PRODUCT.title}</h1>
         </div>
         <nav className="hidden md:flex items-center gap-2 text-sm">
           <button onClick={() => scrollToId('colors')} onKeyDown={(e) => onKey(e, 'colors')} className="btn btn-ghost text-xs tracking-wider alt-head">색상</button>
@@ -18,7 +18,7 @@ export default function Header({ PRODUCT, IMG, scrollToId, onKey }) {
           <button onClick={() => scrollToId('size')} onKeyDown={(e) => onKey(e, 'size')} className="btn btn-ghost text-xs tracking-wider alt-head">Size</button>
           <button onClick={() => scrollToId('price')} onKeyDown={(e) => onKey(e, 'price')} className="btn btn-ghost text-xs tracking-wider alt-head">Price</button>
         </nav>
-        <button type="button" onClick={() => scrollToId('inquiry')} onKeyDown={(e) => onKey(e, 'inquiry')} className="btn btn-primary">문의하기</button>
+        <button type="button" onClick={() => scrollToId('inquiry')} onKeyDown={(e) => onKey(e, 'inquiry')} className="btn btn-primary break-keep">문의하기</button>
       </div>
     </header>
   );
