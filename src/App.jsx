@@ -14,7 +14,7 @@ import Footer from './components/Footer';
 import BackToTopButton from './components/BackToTopButton';
 
 // ====== 안전한 에셋 경로 유틸 ======
-const asset = (p) => p;
+const asset = (p) => `${import.meta.env.BASE_URL}${p}`;
 
 // ====== 데이터 ======
 const PRODUCT = {
