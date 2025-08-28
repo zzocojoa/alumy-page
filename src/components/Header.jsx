@@ -18,7 +18,7 @@ export default function Header({ PRODUCT, IMG, scrollToId, onKey }) {
           <button onClick={() => scrollToId('size')} onKeyDown={(e) => onKey(e, 'size')} className="btn btn-ghost text-xs tracking-wider alt-head">Size</button>
           <button onClick={() => scrollToId('price')} onKeyDown={(e) => onKey(e, 'price')} className="btn btn-ghost text-xs tracking-wider alt-head">Price</button>
         </nav>
-        <button type="button" onClick={() => scrollToId('inquiry')} onKeyDown={(e) => onKey(e, 'inquiry')} className="btn btn-primary break-keep">문의하기</button>
+        <button type="button" onClick={() => scrollToId('inquiry')} onKeyDown={(e) => onKey(e, 'inquiry')} className="btn btn-primary text-sm">문의하기</button>
       </div>
     </header>
   );
