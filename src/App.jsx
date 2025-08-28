@@ -27,10 +27,10 @@ const PRODUCT = {
     `- 4가지 컬러 선택으로 나만의 공간에 어울리는 스타일링`,
   ],
   colors: [
-    { name: "Silver", swatch: "#c0c0c0", img: "/Silver.png" },
-    { name: "Red", swatch: "#e11d48", img: "/Red.png" },
-    { name: "Green", swatch: "#16a34a", img: "/Green.png" },
-    { name: "Yellow", swatch: "#facc15", img: "/Yellow.png" },
+    { name: "Silver", swatch: "#c0c0c0", img: "Silver.png" },
+    { name: "Red", swatch: "#e11d48", img: "Red.png" },
+    { name: "Green", swatch: "#16a34a", img: "Green.png" },
+    { name: "Yellow", swatch: "#facc15", img: "Yellow.png" },
   ],
   titlehighlights: [
     "왜 미닛 카드홀더일까요?",
@@ -57,15 +57,15 @@ const PRODUCT = {
 };
 
 const IMG = {
-  logo: asset('/Alumy.jpg'),
-  hero: asset('/Alumy_Products.png'),
-  intro_detail: asset('/Product-2.png'),
-  detail1: asset('/Product-5.png'),
-  detail2: asset('/Product-3.png'),
-  detail3: asset('/Product-4.png'),
-  usage1: asset('/Utilized_Products-1.png'),
-  usage2: asset('/Utilized_Products-2.png'),
-  usage3: asset('/Utilized_Products-3.png'),
+  logo: asset('Alumy.jpg'),
+  hero: asset('Alumy_Products.png'),
+  intro_detail: asset('Product-2.png'),
+  detail1: asset('Product-5.png'),
+  detail2: asset('Product-3.png'),
+  detail3: asset('Product-4.png'),
+  usage1: asset('Utilized_Products-1.png'),
+  usage2: asset('Utilized_Products-2.png'),
+  usage3: asset('Utilized_Products-3.png'),
   usage4: asset('https://placehold.co/800x450/eeeeee/555555?text=Usage+4'),
 };
 
