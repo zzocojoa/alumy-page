@@ -12,6 +12,7 @@ import Size from './components/Size';
 import Price from './components/Price';
 import Footer from './components/Footer';
 import BackToTopButton from './components/BackToTopButton';
+import VideoScrubSection from './components/VideoScrubSection';
 
 // ====== 안전한 에셋 경로 유틸 ======
 const asset = (p) => `${import.meta.env.BASE_URL}${p}`;
@@ -90,6 +91,11 @@ export default function App() {
       <GlobalDesignTokens />
       <Header PRODUCT={PRODUCT} IMG={IMG} scrollToId={scrollToId} onKey={onKey} />
       <main>
+        <VideoScrubSection
+          srcMp4={asset('20190828_204819.mp4')}
+          srcWebm={asset('20190828_204819.mp4')}
+          poster={asset('Alumy.jpg')}
+        />
         <Hero PRODUCT={PRODUCT} IMG={IMG} />
         <Colors PRODUCT={PRODUCT} />
         <Intro PRODUCT={PRODUCT} IMG={IMG} />

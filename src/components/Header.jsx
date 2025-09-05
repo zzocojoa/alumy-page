@@ -1,9 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import SafeImg from './SafeImg';
 
 export default function Header({ PRODUCT, IMG, scrollToId, onKey }) {
+  const [visible, setVisible] = useState(true);
+  const prevScrollPosRef = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = window.pageYOffset;
+      const isScrolledUp = prevScrollPosRef.current > currentScrollPos;
+
+      // 스크롤을 올릴 때 또는 페이지 상단에 있을 때 헤더를 표시합니다.
+      if (isScrolledUp || currentScrollPos < 10) {
+        setVisible(true);
+      } else {
+        setVisible(false);
+      }
+
+      prevScrollPosRef.current = currentScrollPos;
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <header className="navbar">
+    <header className={`navbar ${!visible ? 'navbar--hidden' : ''}`}>
       <div className="page py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <SafeImg src={IMG.logo} alt="Alumy brand logo" className="h-8 w-auto" />

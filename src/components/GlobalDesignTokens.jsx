@@ -31,7 +31,8 @@ export default function GlobalDesignTokens() {
         .btn-ghost:hover { color: var(--ink); }
         .btn-outline { background:#fff; color: var(--ink); border:1px solid #e5e7eb; }
         .btn-outline:hover { background:#f9fafb; }
-        .navbar { position: sticky; top:0; z-index:40; background: rgba(255,255,255,.8); backdrop-filter: blur(6px); border-bottom:1px solid #f3f4f6; }
+        .navbar { position: sticky; top:0; z-index:40; background: rgba(255,255,255,.8); backdrop-filter: blur(6px); border-bottom:1px solid #f3f4f6; transition: transform 0.3s ease-in-out; }
+        .navbar--hidden { transform: translateY(-100%); }
         .card { border:1px solid #e5e7eb; border-radius: calc(var(--radius) + .5rem); background: var(--surface); }
         
         /* 타이포그래피 유틸리티 */
