@@ -1,9 +1,10 @@
-import AlumyPixelMatch from './components/AlumyLanding/AlumyPixelMatch';
+import AlumyContentConfigV4 from './components/AlumyLanding/AlumyContentConfigV4';
+
 import './App.css';
 
 function App() {
   return (
-    <AlumyPixelMatch />
+    <AlumyContentConfigV4 />
   );
 }
 
