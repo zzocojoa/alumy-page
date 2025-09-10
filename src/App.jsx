@@ -23,7 +23,10 @@ export default function App(){
         index === 0 && (
           <VideoScrubSection
             key="video-scrub"
-            srcMp4="Hold_it_up.webm"
+            // Provide correct source by type; this file is WebM
+            srcWebm="Hold_it_up.webm"
+            // Mobile Safari needs MP4; use available fallback
+            srcMp4="20250910_091449166.mp4"
             poster="Alumy.jpg"
             sectionHeightVh={100}
             stickyTop={0}
