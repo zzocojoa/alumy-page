@@ -29,7 +29,7 @@ const CONTENT = {
       { icon: "🛡️", title: "강화 알루미늄", desc: "스크래치와 부식에 강한 외장 마감." },
       { icon: "🎨", title: "4가지 컬러", desc: "공간에 어울리는 세련된 색상." },
       { icon: "📐", title: "안정적 거치", desc: "미니멀한 삼각 구조로 흔들림 최소화." },
-      { icon: "♻️", title: "지속가능성", desc: "리사이클링 반납 시 페이백 적용." },
+      { icon: "♻️", title: "지속 가능성", desc: "리사이클링 반납 시 페이백 적용." },
     ],
   },
   features: [
@@ -46,6 +46,8 @@ const CONTENT = {
         { src: "Utilized_Products-1.png", alt: "제품 디테일 01", label: "Alumy Memo Holder" },
         { src: "Utilized_Products-2.png", alt: "제품 디테일 02", label: "Alumy Memo Holder" },
         { src: "Utilized_Products-3.png", alt: "제품 디테일 03", label: "Alumy Memo Holder" },
+        { src: "Utilized_Products-4.png", alt: "제품 디테일 03", label: "Alumy Memo Holder" },
+
       ],
     },
     {
