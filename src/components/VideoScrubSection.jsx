@@ -6,6 +6,7 @@ function VideoScrubSection({ src, srcs, srcWebm, srcMp4, poster, sectionHeightVh
   const videoRef = useRef(null);
   const [duration, setDuration] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [primed, setPrimed] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
   const [width, setWidth] = useState('100%');
   const [borderRadius, setBorderRadius] = useState(0);
@@ -58,14 +59,32 @@ function VideoScrubSection({ src, srcs, srcWebm, srcMp4, poster, sectionHeightVh
     };
   }, []);
 
+  const primeVideo = async () => {
+    const v = videoRef.current;
+    if (!v || primed) return;
+    try {
+      // Ensure video element is paused before scrubbing
+      v.pause();
+      // iOS Safari sometimes needs a short play -> pause to decode frames
+      await v.play().catch(() => null);
+      v.pause();
+    } catch (_) {
+      // ignore
+    }
+    setPrimed(true);
+  };
+
   const onLoadedMeta = () => {
     const v = videoRef.current;
     if (v && Number.isFinite(v.duration)) setDuration(v.duration);
+    primeVideo();
   };
 
   useEffect(() => {
     const v = videoRef.current;
     if (!v || reduceMotion || !duration) return;
+    // On some mobile browsers, setting currentTime too frequently while seeking causes no-op.
+    if (v.seeking) return;
     const t = duration * progress;
     if (Math.abs((v.currentTime || 0) - t) > 1 / 60) {
       try { v.currentTime = t; } catch { /* iOS seeking quirks: ignore */ }
@@ -141,7 +160,18 @@ function VideoScrubSection({ src, srcs, srcWebm, srcMp4, poster, sectionHeightVh
           {reduceMotion ? (
             <img src={posterUrl} alt="Video scrub poster" width={1600} height={1000} loading="lazy" className="h-screen w-full object-cover" />
           ) : (
-            <video ref={videoRef} className="h-screen w-full object-cover" muted playsInline preload="auto" poster={posterUrl} onLoadedMetadata={onLoadedMeta} onError={onVideoError}>
+            <video
+              ref={videoRef}
+              className="h-screen w-full object-cover"
+              muted
+              playsInline
+              preload="auto"
+              poster={posterUrl}
+              onLoadedMetadata={onLoadedMeta}
+              onLoadedData={primeVideo}
+              onCanPlay={primeVideo}
+              onError={onVideoError}
+            >
               {sources.map(s => (
                 <source key={`${s.src}|${s.type || 'auto'}`} src={s.src} {...(s.type ? { type: s.type } : {})} />
               ))}
