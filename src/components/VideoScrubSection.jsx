@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 
 // ===================== Video Scrub Section =====================
-function VideoScrubSection({ srcWebm, srcMp4, poster, sectionHeightVh = 220, stickyTop = 0 }) {
+function VideoScrubSection({ src, srcs, srcWebm, srcMp4, poster, sectionHeightVh = 220, stickyTop = 0 }) {
   const sectionRef = useRef(null);
   const videoRef = useRef(null);
   const [duration, setDuration] = useState(0);
@@ -73,8 +73,46 @@ function VideoScrubSection({ srcWebm, srcMp4, poster, sectionHeightVh = 220, sti
   }, [progress, duration, reduceMotion]);
 
   const posterUrl = resolveAsset(poster);
-  const mp4Url = resolveAsset(srcMp4);
-  const webmUrl = resolveAsset(srcWebm);
+
+  // Normalize sources: accept src/srcs or legacy srcWebm/srcMp4 and infer type by extension.
+  const normalizeSources = () => {
+    const list = [];
+    const push = (u) => {
+      if (!u) return;
+      const url = resolveAsset(u.src || u);
+      const explicitType = u.type;
+      const lower = String(url).split('?')[0].toLowerCase();
+      let type = explicitType;
+      if (!type) {
+        if (lower.endsWith('.webm')) type = 'video/webm';
+        else if (lower.endsWith('.mp4')) type = 'video/mp4';
+        else if (lower.endsWith('.ogv') || lower.endsWith('.ogg')) type = 'video/ogg';
+      }
+      list.push({ src: url, type });
+    };
+
+    // New flexible props
+    if (Array.isArray(srcs)) srcs.forEach(push);
+    if (src) push(src);
+
+    // Backward-compatible props (name may be mismatched; we auto-infer type)
+    if (srcWebm) push(srcWebm);
+    if (srcMp4) push(srcMp4);
+
+    // Sort preference: webm first, then mp4, then others
+    const rank = { 'video/webm': 0, 'video/mp4': 1, 'video/ogg': 2 };
+    list.sort((a, b) => (rank[a.type] ?? 99) - (rank[b.type] ?? 99));
+
+    // De-duplicate by URL
+    const seen = new Set();
+    return list.filter(s => {
+      if (!s.src || seen.has(s.src)) return false;
+      seen.add(s.src);
+      return true;
+    });
+  };
+
+  const sources = normalizeSources();
 
   const onVideoError = (e) => {
     const v = e.currentTarget;
@@ -104,8 +142,9 @@ function VideoScrubSection({ srcWebm, srcMp4, poster, sectionHeightVh = 220, sti
             <img src={posterUrl} alt="Video scrub poster" width={1600} height={1000} loading="lazy" className="h-screen w-full object-cover" />
           ) : (
             <video ref={videoRef} className="h-screen w-full object-cover" muted playsInline preload="auto" poster={posterUrl} onLoadedMetadata={onLoadedMeta} onError={onVideoError}>
-              {webmUrl ? <source src={webmUrl} type="video/webm" /> : null}
-              {mp4Url ? <source src={mp4Url} type="video/mp4" /> : null}
+              {sources.map(s => (
+                <source key={`${s.src}|${s.type || 'auto'}`} src={s.src} {...(s.type ? { type: s.type } : {})} />
+              ))}
             </video>
           )}
         </div>
