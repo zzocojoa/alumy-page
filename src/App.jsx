@@ -13,7 +13,7 @@ import Footer from './components/Footer';
 
 export default function App(){
   return (
-    <main className="min-h-screen bg-white text-gray-800 font-sans tracking-tight">
+    <main className="min-h-screen bg-white text-gray-800 font-sans tracking-tight overflow-x-hidden">
       <ScrollProgressBar />
       <Header content={CONTENT.header} />
       <Hero content={CONTENT.hero} />
@@ -23,9 +23,9 @@ export default function App(){
         index === 0 && (
           <VideoScrubSection
             key="video-scrub"
-            srcMp4="20250910_091449166.webm"
+            srcMp4="Hold_it_up.webm"
             poster="Alumy.jpg"
-            sectionHeightVh={220}
+            sectionHeightVh={100}
             stickyTop={0}
           />
         )

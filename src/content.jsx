@@ -18,7 +18,7 @@ const CONTENT = {
       <>
         <strong className="font-semibold"><em>작게, 더 강하게. 어디서든 돋보이다. </em></strong>
         탁상 위에 정보가 설 자리를 만드는 가장 간결한 방법.<br />
-        <span className="font-bold">'Alumy Memo Holder'</span>는 이름표부터 예약표, 가격표, 안내문구까지 어떤 메시지든 또렷하게 세워줍니다.
+        <span className="font-bold">'Alumy Memo Holder'</span>는 이름표부터 예약표, 가격표, 안내문구까지 어떤 메시지든 거치 가능.
       </>
     ),
     heroImg: "Alumy Memo Holder-1.png",
@@ -80,7 +80,7 @@ const CONTENT = {
     image: "blueprint.png",
     alt: "제품 치수 개요 이미지",
     specs: [
-      { label: "권장 메모 크기", value: "75x50mm ~ 90x90mm" },
+      { label: "권장 속지 크기", value: "75x50mm ~ 90x90mm" },
       { label: "재질", value: "프리미엄 알루미늄" },
     ],
     note: "표기 치수는 참고용입니다. 옵션에 따라 세부 사양이 달라질 수 있습니다.",

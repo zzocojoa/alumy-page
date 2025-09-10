@@ -37,7 +37,8 @@ function VideoScrubSection({ srcWebm, srcMp4, poster, sectionHeightVh = 220, sti
       setProgress(p);
 
       const targetWidth = 1184; // max-w-6xl + padding
-      const currentWidth = window.innerWidth;
+      // Use clientWidth to avoid including vertical scrollbar width (prevents initial horizontal overflow)
+      const currentWidth = document.documentElement.clientWidth || window.innerWidth;
       const newWidth = currentWidth - (currentWidth - targetWidth) * p;
       setWidth(`${newWidth}px`);
 
@@ -89,11 +90,12 @@ function VideoScrubSection({ srcWebm, srcMp4, poster, sectionHeightVh = 220, sti
 
   return (
     <section id="video-scrub" ref={sectionRef} className="relative isolate z-20" style={{ height: `${sectionHeightVh}vh` }} aria-label="Scroll to scrub video frames">
-      <div className="sticky z-20 w-full bg-stone-100" style={{ top: stickyTop }}>
+      <div className="sticky z-20 w-full bg-stone-100 overflow-x-clip" style={{ top: stickyTop }}>
         <div
           className="mx-auto"
           style={{
             width: width,
+            maxWidth: '100%',
             borderRadius: `${borderRadius}px`,
             overflow: 'hidden',
           }}
