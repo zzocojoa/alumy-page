@@ -89,7 +89,7 @@ const CONTENT = {
   },
   price: {
     title: "가격",
-    headers: ["사이즈", "Silver", "Red", "Green", "Yellow", "묶음 배송 할인량"],
+    headers: ["속지 사이즈", "Silver", "Red", "Green", "Yellow", "묶음 배송 할인량"],
     rows: [
       { size: "75 x 50", prices: ["금액", "금액", "금액", "금액"], bundle: "160개" },
       { size: "80 x 60", prices: ["금액", "금액", "금액", "금액"], bundle: "120개" },
