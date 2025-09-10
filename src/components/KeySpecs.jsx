@@ -20,7 +20,7 @@ const KeySpecs = ({ content }) => {
                         <div className="text-[56px] leading-none shrink-0 self-center">{spec.icon}</div>
                         <div>
                           <h3
-                            className="font-semibold leading-tight text-transparent bg-clip-text text-[30px]"
+                            className="font-semibold leading-tight text-transparent bg-clip-text text-[25px]"
                             style={{ backgroundImage: 'linear-gradient(-74deg, var(--gradient-blue-start), var(--gradient-blue-end))' }}
                           >
                             <span className="block">{line1}</span>
