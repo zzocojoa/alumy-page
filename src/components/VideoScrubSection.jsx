@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 
-/* ===================== Video Scrub 컴포넌트(B 방식) ===================== */
-function VideoScrubSection({ srcWebm, srcMp4, poster, sectionHeightVh = 220, stickyTop = 0 }){
+// ===================== Video Scrub Section =====================
+function VideoScrubSection({ srcWebm, srcMp4, poster, sectionHeightVh = 220, stickyTop = 0 }) {
   const sectionRef = useRef(null);
   const videoRef = useRef(null);
   const [duration, setDuration] = useState(0);
@@ -10,12 +10,20 @@ function VideoScrubSection({ srcWebm, srcMp4, poster, sectionHeightVh = 220, sti
   const [width, setWidth] = useState('100%');
   const [borderRadius, setBorderRadius] = useState(0);
 
+  // Resolve asset paths against Vite base to work under subpaths (e.g., GitHub Pages)
+  const resolveAsset = (p) => {
+    if (!p) return p;
+    if (/^https?:\/\//i.test(p)) return p;
+    const base = import.meta.env.BASE_URL || '/';
+    return `${base}${String(p).replace(/^\//, '')}`;
+  };
+
   useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
     const apply = () => setReduceMotion(mq.matches);
     apply();
-    mq.addEventListener?.("change", apply);
-    return () => mq.removeEventListener?.("change", apply);
+    mq.addEventListener?.('change', apply);
+    return () => mq.removeEventListener?.('change', apply);
   }, []);
 
   useEffect(() => {
@@ -28,8 +36,7 @@ function VideoScrubSection({ srcWebm, srcMp4, poster, sectionHeightVh = 220, sti
       const p = Math.min(1, Math.max(0, (view - rect.top) / (rect.height + view)));
       setProgress(p);
 
-      // .max-w-6xl (72rem = 1152px) + px-4 (1rem = 16px) * 2 = 1184px
-      const targetWidth = 1184;
+      const targetWidth = 1184; // max-w-6xl + padding
       const currentWidth = window.innerWidth;
       const newWidth = currentWidth - (currentWidth - targetWidth) * p;
       setWidth(`${newWidth}px`);
@@ -41,11 +48,11 @@ function VideoScrubSection({ srcWebm, srcMp4, poster, sectionHeightVh = 220, sti
     };
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(calc); };
     calc();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
       if (raf) cancelAnimationFrame(raf);
     };
   }, []);
@@ -60,13 +67,29 @@ function VideoScrubSection({ srcWebm, srcMp4, poster, sectionHeightVh = 220, sti
     if (!v || reduceMotion || !duration) return;
     const t = duration * progress;
     if (Math.abs((v.currentTime || 0) - t) > 1 / 60) {
-      try { v.currentTime = t; } catch (e) { /* iOS 시킹 준비 전 예외 무시 */ }
+      try { v.currentTime = t; } catch { /* iOS seeking quirks: ignore */ }
     }
   }, [progress, duration, reduceMotion]);
 
+  const posterUrl = resolveAsset(poster);
+  const mp4Url = resolveAsset(srcMp4);
+  const webmUrl = resolveAsset(srcWebm);
+
+  const onVideoError = (e) => {
+    const v = e.currentTarget;
+    const err = v && v.error ? { code: v.error.code, message: v.error.message } : null;
+    // eslint-disable-next-line no-console
+    console.error('[VideoScrub] Video failed to load/play', {
+      sources: { webm: webmUrl, mp4: mp4Url },
+      networkState: v ? v.networkState : undefined,
+      readyState: v ? v.readyState : undefined,
+      error: err,
+    });
+  };
+
   return (
-    <section id="video-scrub" ref={sectionRef} className="relative" style={{ height: `${sectionHeightVh}vh` }} aria-label="스크롤에 따라 종이가 홀더에 들어가는 과정">
-      <div className="sticky w-full bg-stone-100" style={{ top: stickyTop }}>
+    <section id="video-scrub" ref={sectionRef} className="relative isolate z-20" style={{ height: `${sectionHeightVh}vh` }} aria-label="Scroll to scrub video frames">
+      <div className="sticky z-20 w-full bg-stone-100" style={{ top: stickyTop }}>
         <div
           className="mx-auto"
           style={{
@@ -76,11 +99,11 @@ function VideoScrubSection({ srcWebm, srcMp4, poster, sectionHeightVh = 220, sti
           }}
         >
           {reduceMotion ? (
-            <img src={poster} alt="종이 삽입 과정 고정 이미지" width={1600} height={1000} loading="lazy" className="h-screen w-full object-cover" />
+            <img src={posterUrl} alt="Video scrub poster" width={1600} height={1000} loading="lazy" className="h-screen w-full object-cover" />
           ) : (
-            <video ref={videoRef} className="h-screen w-full object-cover" muted playsInline preload="metadata" poster={poster} onLoadedMetadata={onLoadedMeta}>
-              <source src={srcWebm} type="video/webm" />
-              <source src={srcMp4} type="video/mp4" />
+            <video ref={videoRef} className="h-screen w-full object-cover" muted playsInline preload="auto" poster={posterUrl} onLoadedMetadata={onLoadedMeta} onError={onVideoError}>
+              {webmUrl ? <source src={webmUrl} type="video/webm" /> : null}
+              {mp4Url ? <source src={mp4Url} type="video/mp4" /> : null}
             </video>
           )}
         </div>

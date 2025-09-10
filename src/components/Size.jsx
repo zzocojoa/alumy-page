@@ -1,32 +1,37 @@
-import React from 'react';
-import DimensionSVG from './DimensionSVG';
+import useScrollFadeIn from '../hooks/useScrollFadeIn';
 
-export default function Size({ PRODUCT }) {
+const gradientTextClass = "bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 text-transparent bg-clip-text";
+
+const Size = ({ content }) => {
+  const animatedSize = useScrollFadeIn('up', 1, 0);
+
   return (
-    <section id="size" className="page scroll-mt-24 py-10 md:py-14">
-      <h3 className="display alt-head text-xl md:text-3xl h-tight balance">Size</h3>
-      <div className="mt-6 grid md:grid-cols-2 gap-8 items-start">
-        <DimensionSVG />
-        <div className="overflow-hidden rounded-2xl border border-gray-200">
-          <table className="w-full text-left text-sm num">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-4 py-3 font-semibold text-gray-700">규격 (가로×세로)</th>
-                <th className="px-4 py-3 font-semibold text-gray-700">속지 사이즈 (W x H)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {PRODUCT.sizes.map((row, i) => (
-                <tr key={i} className="border-t border-gray-200">
-                  <td className="px-4 py-3">{row.spec}</td>
-                  <td className="px-4 py-3 text-gray-500">{row.note}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <p className="md:col-span-2 text-xs text-gray-500">※ 표기 치수는 참고용입니다.</p>
+    <section id="size" className="bg-gray-50 py-24 md:py-32" {...animatedSize}>
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+              <h2 className={`text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl ${gradientTextClass}`}>{content.title}</h2>
+          </div>
+          <div className="mt-16 grid grid-cols-1 items-center gap-y-16 gap-x-8 lg:grid-cols-2">
+              <div>
+                  <div className="border-b border-gray-200 pb-10">
+                  {content.specs.map(spec => (
+                      <div key={spec.label} className="pt-10">
+                          <dt className="font-medium text-gray-900">{spec.label}</dt>
+                          <dd className="mt-2 text-2xl text-gray-500">{spec.value}</dd>
+                      </div>
+                  ))}
+                  </div>
+                  <p className="mt-6 text-sm text-gray-500">{content.note}</p>
+              </div>
+              <div>
+                  <div className="aspect-[5/4] lg:aspect-[3/3] overflow-hidden rounded-2xl bg-gray-100 shadow-xl">
+                      <img src={content.image} alt={content.alt} className="h-full w-full object-cover"/>
+                  </div>
+              </div>
+          </div>
       </div>
     </section>
   );
-}
+};
+
+export default Size;
