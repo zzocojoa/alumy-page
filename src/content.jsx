@@ -1,7 +1,7 @@
 // ===================== 콘텐츠 설정 (JSON) =====================
 const CONTENT = {
   header: {
-    productName: "Alumy Memo Holder",
+    productName: "Memo Holder",
     cta: "구매하기",
     href: "#price",
   },
@@ -73,7 +73,7 @@ const CONTENT = {
       { name: "Green", hex: "#0fd850" },
       { name: "Yellow", hex: "#f9d423" },
     ],
-    note: "실제 색상은 디스플레이/촬영 환경에 따라 다를 수 있습니다.",
+    note: "※ 실제 색상은 디스플레이/촬영 환경에 따라 다를 수 있습니다.",
   },
   size: {
     title: "한눈에 보는 치수",
@@ -81,9 +81,9 @@ const CONTENT = {
     alt: "제품 치수 개요 이미지",
     specs: [
       { label: "권장 속지 크기", value: "75x50mm ~ 90x90mm" },
-      { label: "재질", value: "프리미엄 알루미늄" },
+      { label: "재질", value: "알루미늄/6063" },
     ],
-    note: "표기 치수는 참고용입니다. 옵션에 따라 세부 사양이 달라질 수 있습니다.",
+    note: "※ 표기 치수는 참고용입니다. 옵션에 따라 세부 사양이 달라질 수 있습니다.",
   },
   price: {
     title: "가격",
@@ -95,7 +95,7 @@ const CONTENT = {
       { size: "90 x 70", prices: ["금액", "금액", "금액", "금액"], bundle: "90개" },
       { size: "90 x 90", prices: ["금액", "금액", "금액", "금액"], bundle: "80개" },
     ],
-    note: "기본 배송비 3,000원이 부과됩니다. 묶음 배송 할인량 초과 시 추가 배송비가 발생할 수 있습니다.",
+    note: "※ 기본 배송비 3,000원이 부과됩니다. 묶음 배송 할인량 초과 시 추가 배송비가 발생할 수 있습니다.",
   },
   contact: {
     tel: "1234-5678",

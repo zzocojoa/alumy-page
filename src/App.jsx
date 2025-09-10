@@ -31,7 +31,11 @@ export default function App(){
         )
       ]))}
       <Colors content={CONTENT.colors} />
-      <Size content={CONTENT.size} />
+      <Size content={{
+        ...CONTENT.size,
+        productName: '알루미 메모 홀더',
+        origin: '한국',
+      }} />
       <Price content={CONTENT.price} />
       <Contact content={CONTENT.contact} />
       <Footer />
