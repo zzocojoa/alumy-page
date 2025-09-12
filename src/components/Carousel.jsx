@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 
 // items: Array<{ src: string, alt?: string }>
-export default function Carousel({ items = [], intervalMs = 3000 }) {
+export default function Carousel({ items = [], intervalMs = 3000, captionMode = 'overlay', captionClassName = '', onIndexChange }) {
   const [index, setIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const containerRef = useRef(null);
@@ -16,6 +16,13 @@ export default function Carousel({ items = [], intervalMs = 3000 }) {
     const id = setInterval(next, intervalMs);
     return () => clearInterval(id);
   }, [count, isPlaying, intervalMs, next]);
+
+  // notify parent on index change
+  useEffect(() => {
+    if (typeof onIndexChange === 'function' && count) {
+      onIndexChange(index, items[index]);
+    }
+  }, [index, count, items, onIndexChange]);
 
   // keyboard navigation when focused
   useEffect(() => {
@@ -82,7 +89,7 @@ export default function Carousel({ items = [], intervalMs = 3000 }) {
       aria-roledescription="carousel"
       aria-label="이미지 슬라이드"
     >
-      <div className="relative h-full w-full overflow-hidden rounded-lg sm:rounded-xl">
+      <div className="relative h-full w-full overflow-hidden rounded-lg sm:rounded-xl bg-white">
         {items.map((item, i) => (
           <img
             key={i}
@@ -96,13 +103,15 @@ export default function Carousel({ items = [], intervalMs = 3000 }) {
         ))}
       </div>
 
+      {/* Caption: overlay mode */}
+      {captionMode === 'overlay' && (
+        <div className={`absolute bottom-4 left-4 text-[13px] font-medium text-white/95 [text-shadow:0_1px_2px_rgba(0,0,0,0.6)] select-none ${captionClassName}`}>
+          {items[index]?.label || items[index]?.caption || ''}
+        </div>
+      )}
+
       {count > 1 && (
         <>
-          {/* Label bottom-left (plain text) */}
-          <div className="absolute bottom-4 left-4 text-[13px] font-medium text-white/95 [text-shadow:0_1px_2px_rgba(0,0,0,0.6)] select-none">
-            {items[index]?.label || items[index]?.caption || ''}
-          </div>
-
           {/* Controls group bottom-right */}
           <div className="absolute bottom-4 right-4 z-20 flex items-center gap-2">
             <button
@@ -135,6 +144,12 @@ export default function Carousel({ items = [], intervalMs = 3000 }) {
             </button>
           </div>
         </>
+      )}
+      {/* Caption: below image mode */}
+      {captionMode === 'below' && (
+        <div className={`mt-4 text-center text-sm font-semibold ${captionClassName}`}>
+          {items[index]?.label || items[index]?.caption || ''}
+        </div>
       )}
     </div>
   );

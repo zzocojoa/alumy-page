@@ -43,10 +43,10 @@ const CONTENT = {
         </>
       ),
       images: [
-        { src: "Utilized_Products-1.png", alt: "제품 디테일 01", label: "Alumy Memo Holder" },
-        { src: "Utilized_Products-2.png", alt: "제품 디테일 02", label: "Alumy Memo Holder" },
-        { src: "Utilized_Products-3.png", alt: "제품 디테일 03", label: "Alumy Memo Holder" },
-        { src: "Utilized_Products-4.png", alt: "제품 디테일 04", label: "Alumy Memo Holder" },
+        { src: "Utilized_Products-1.png", alt: "베이커리 진열 이미지", label: "베이커리 진열, 자연스럽게." },
+        { src: "Utilized_Products-2.png", alt: "데스크 톤 매치 이미지", label: "데스크 위에도, 미니멀하게." },
+        { src: "Utilized_Products-3.png", alt: "알루미늄 질감 이미지", label: "브러시드 알루미늄의 질감." },
+        { src: "Utilized_Products-4.png", alt: "회의실 네임태그 이미지", label: "회의실 네임태그로도 완벽하게." },
 
       ],
     },
@@ -59,10 +59,10 @@ const CONTENT = {
         </>
       ),
       images: [
-        { src: "Silver.jpg", alt: "어두운 배경 컬러 샷 01", label: "Alumy Memo Holder" },
-        { src: "Red.png", alt: "어두운 배경 컬러 샷 02", label: "Alumy Memo Holder" },
-        { src: "Green.png", alt: "어두운 배경 컬러 샷 02", label: "Alumy Memo Holder" },
-        { src: "Yellow.png", alt: "어두운 배경 컬러 샷 02", label: "Alumy Memo Holder" },
+        { src: "Silver.jpg", alt: "실버 색상 이미지", label: "Silver — 정제된 메탈 감성." },
+        { src: "Red.png", alt: "레드 색상 이미지", label: "Red — 공간을 밝히는 포인트." },
+        { src: "Green.png", alt: "그린 색상 이미지", label: "Green — 차분한 균형감." },
+        { src: "Yellow.png", alt: "옐로우 색상 이미지", label: "Yellow — 따뜻한 온기." },
 
       ],
     },

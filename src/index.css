@@ -3,9 +3,32 @@
 
 body {
   font-family: 'NanumSquare', sans-serif;
+  color: var(--text-body);
+  /* 모바일 우선 폰트 크기: 소형에서 가독성, md 이상 21px */
+  font-size: 18px;
 }
 
 :root{
   --gradient-blue-start: #60a5fa; /* tailwind blue-400 */
   --gradient-blue-end: #2563eb;   /* tailwind blue-600 */
+  /* Typography tokens */
+  --text-body: #86868b;  /* 기본 본문 텍스트 */
+  --text-strong: #1d1d1f; /* 중요한 텍스트 */
 }
+
+@media (min-width: 640px) { /* sm */
+  body { font-size: 19px; }
+}
+@media (min-width: 768px) { /* md */
+  body { font-size: 21px; }
+}
+@media (min-width: 1024px) { /* lg */
+  body { font-size: 22px; }
+}
+
+/* Utility helpers (Tailwind과 함께 사용) */
+.text-body { color: var(--text-body) !important; }
+.text-strong { color: var(--text-strong) !important; }
+
+/* 의미 요소 기본 처리 */
+strong, b { color: var(--text-strong); }
