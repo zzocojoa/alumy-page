@@ -26,8 +26,9 @@ export default function App(){
             // Provide both formats; component auto-detects types
             srcs={["Hold_it_up.webm", "Hold_it_up.mp4"]}
             poster="Alumy.jpg"
-            sectionHeightVh={100}
+            sectionHeightVh={70}
             stickyTop={0}
+            videoHeight={677}
           />
         )
       ]))}

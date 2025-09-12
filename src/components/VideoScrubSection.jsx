@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 
 // ===================== Video Scrub Section =====================
-function VideoScrubSection({ src, srcs, srcWebm, srcMp4, poster, sectionHeightVh = 220, stickyTop = 0 }) {
+function VideoScrubSection({ src, srcs, srcWebm, srcMp4, poster, sectionHeightVh = 220, stickyTop = 0, videoHeight }) {
   const sectionRef = useRef(null);
   const videoRef = useRef(null);
   const [duration, setDuration] = useState(0);
@@ -92,6 +92,7 @@ function VideoScrubSection({ src, srcs, srcWebm, srcMp4, poster, sectionHeightVh
   }, [progress, duration, reduceMotion]);
 
   const posterUrl = resolveAsset(poster);
+  const mediaHeight = typeof videoHeight === 'number' ? `${videoHeight}px` : (videoHeight || '100vh');
 
   // Normalize sources: accept src/srcs or legacy srcWebm/srcMp4 and infer type by extension.
   const normalizeSources = () => {
@@ -158,11 +159,12 @@ function VideoScrubSection({ src, srcs, srcWebm, srcMp4, poster, sectionHeightVh
           }}
         >
           {reduceMotion ? (
-            <img src={posterUrl} alt="Video scrub poster" width={1600} height={1000} loading="lazy" className="h-screen w-full object-cover" />
+            <img src={posterUrl} alt="Video scrub poster" width={1600} height={1000} loading="lazy" className="w-full object-cover" style={{ height: mediaHeight }} />
           ) : (
             <video
               ref={videoRef}
-              className="h-screen w-full object-cover"
+              className="w-full object-cover"
+              style={{ height: mediaHeight }}
               muted
               playsInline
               preload="auto"
