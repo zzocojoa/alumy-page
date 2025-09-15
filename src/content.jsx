@@ -59,7 +59,7 @@ const CONTENT = {
         </>
       ),
       images: [
-        { src: "Silver.jpg", alt: "실버 색상 이미지", label: "Silver — 정제된 메탈 감성." },
+        { src: "Silver.png", alt: "실버 색상 이미지", label: "Silver — 정제된 메탈 감성." },
         { src: "Red.png", alt: "레드 색상 이미지", label: "Red — 공간을 밝히는 포인트." },
         { src: "Green.png", alt: "그린 색상 이미지", label: "Green — 차분한 균형감." },
         { src: "Yellow.png", alt: "옐로우 색상 이미지", label: "Yellow — 따뜻한 온기." },

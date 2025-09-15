@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 
 // items: Array<{ src: string, alt?: string }>
-export default function Carousel({ items = [], intervalMs = 3000, captionMode = 'overlay', captionClassName = '', onIndexChange }) {
+export default function Carousel({ items = [], intervalMs = 3000, captionMode = 'overlay', captionClassName = '', onIndexChange, variant = 'fade' }) {
   const [index, setIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const containerRef = useRef(null);
+  const viewportRef = useRef(null);
+  const [viewportWidth, setViewportWidth] = useState(0);
   const count = items.length;
 
   const next = useCallback(() => setIndex((i) => (i + 1) % count), [count]);
@@ -79,6 +81,15 @@ export default function Carousel({ items = [], intervalMs = 3000, captionMode = 
     };
   }, [next, prev]);
 
+  // measure viewport for slide variant to avoid percent math issues
+  useEffect(() => {
+    if (variant !== 'slide') return;
+    const measure = () => setViewportWidth(viewportRef.current?.clientWidth || containerRef.current?.clientWidth || 0);
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, [variant]);
+
   if (!count) return null;
 
   return (
@@ -89,18 +100,43 @@ export default function Carousel({ items = [], intervalMs = 3000, captionMode = 
       aria-roledescription="carousel"
       aria-label="이미지 슬라이드"
     >
-      <div className="relative h-full w-full overflow-hidden rounded-lg sm:rounded-xl bg-white">
-        {items.map((item, i) => (
-          <img
-            key={i}
-            src={item.src}
-            alt={item.alt || ''}
-            width={2432}
-            height={1442}
-            className={`absolute inset-0 z-10 h-full w-full object-cover rounded-lg sm:rounded-xl shadow-2xl ring-1 ring-gray-900/10 transition-all duration-500 ease-[cubic-bezier(.2,.8,.2,1)] will-change-transform ${i === index ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'}`}
-            loading={i === 0 ? 'eager' : 'lazy'}
-          />
-        ))}
+      {/* Viewport */}
+      <div ref={viewportRef} className="relative h-full w-full overflow-hidden rounded-lg sm:rounded-xl bg-white">
+        {variant === 'slide' ? (
+          // Track: slides horizontally
+          <div
+            className="flex h-full transition-transform duration-500 ease-[cubic-bezier(.2,.8,.2,1)] will-change-transform"
+            style={{ transform: `translateX(-${index * viewportWidth}px)` }}
+          >
+            {items.map((item, i) => (
+              <div key={i} className="h-full w-full shrink-0 grow-0 basis-full relative">
+                <img
+                  src={item.src}
+                  alt={item.alt || ''}
+                  width={2432}
+                  height={1442}
+                  className="absolute inset-0 z-10 h-full w-full object-cover rounded-lg sm:rounded-xl shadow-2xl ring-1 ring-gray-900/10"
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                />
+              </div>
+            ))}
+          </div>
+        ) : (
+          // Fade/scale between stacked items (default)
+          <>
+            {items.map((item, i) => (
+              <img
+                key={i}
+                src={item.src}
+                alt={item.alt || ''}
+                width={2432}
+                height={1442}
+                className={`absolute inset-0 z-10 h-full w-full object-cover rounded-lg sm:rounded-xl shadow-2xl ring-1 ring-gray-900/10 transition-all duration-500 ease-[cubic-bezier(.2,.8,.2,1)] will-change-transform ${i === index ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'}`}
+                loading={i === 0 ? 'eager' : 'lazy'}
+              />
+            ))}
+          </>
+        )}
       </div>
 
       {/* Caption: overlay mode */}

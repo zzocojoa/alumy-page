@@ -19,7 +19,7 @@ export default function App(){
       <Hero content={CONTENT.hero} />
       <KeySpecs content={CONTENT.keySpecs} />
       {CONTENT.features.flatMap((feature, index) => ([
-        <FeatureSection key={`feature-${index}`} feature={feature} />,
+        <FeatureSection key={`feature-${index}`} feature={feature} variant={index === 0 ? 'slide' : 'fade'} />,
         index === 0 && (
           <VideoScrubSection
             key="video-scrub"

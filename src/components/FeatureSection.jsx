@@ -4,7 +4,7 @@ import Carousel from './Carousel';
 
 const gradientTextClass = "bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 text-transparent bg-clip-text";
 
-const FeatureSection = ({ feature }) => {
+const FeatureSection = ({ feature, variant = 'fade' }) => {
   const animatedItem = useScrollFadeIn();
   const isDark = feature.theme === 'dark';
   const bgColor = isDark ? 'bg-black' : 'bg-gray-50';
@@ -55,6 +55,7 @@ const FeatureSection = ({ feature }) => {
             <Carousel
               items={items}
               captionMode="none"
+              variant={variant}
               onIndexChange={(i, it) => setCaption(pickWithDefault(it, i))}
             />
           </div>
